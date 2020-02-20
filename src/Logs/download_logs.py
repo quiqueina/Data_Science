@@ -1,12 +1,12 @@
 import os
 import pandas as pd
 import glob
-from auracog_lib.config.auconfig import AuConfig
-from auracog_utils import DEFAULT_CONFIG_NAME
-from auracog_utils.repo import AuraRepository
+from privatecog_lib.config.privateconfig import privateConfig
+from privatecog_utils import DEFAULT_CONFIG_NAME
+from privatecog_utils.repo import PrivateRepository
 
 # El script que descarga los datasets de Artifactory necesita conocer mis credenciales. Dichas credenciales se encuentran (metidas por mi a mano) en:
-# /opt/aura/app/etc/aura-utils.cfg
+# /opt/private/app/etc/private-utils.cfg
 
 #CURRENT_PATH = os.path.abspath(os.path.dirname(__file__))
 CURRENT_PATH = '/home/kike/Documentos/data'
@@ -17,8 +17,8 @@ def read_kpi_log():
     filepath = os.path.join(CURRENT_PATH, 'logs_recognizer', filename)
 
     if not os.path.exists(filepath):
-        cfg = AuConfig(DEFAULT_CONFIG_NAME)
-        repo = AuraRepository(cfg)
+        cfg = privateConfig(DEFAULT_CONFIG_NAME)
+        repo = PrivateRepository(cfg)
         repo_items = repo.index(as_table=True)
         colnames = next(repo_items)
         datasets = pd.DataFrame.from_records(repo_items, columns=colnames)
